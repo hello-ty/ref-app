@@ -1,0 +1,34 @@
+.container {
+  min-height: 100vh;
+  /* padding: 0 0.5rem; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  /* height: 100vh; */
+}
+.header {
+  background-color: lightblue;
+}
+
+.main {
+  flex: 1;
+  background-color: lightpink;
+}
+
+.nav {
+  position: fixed;
+  background-color: lightgreen;
+  bottom: 0;
+  width: 100%;
+}
+
+.ul {
+  display: flex;
+}
+
+.li {
+  background-color: lightyellow;
+  flex-direction: column;
+  flex: 1;
+}
