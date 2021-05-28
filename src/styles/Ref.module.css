@@ -7,10 +7,6 @@
   align-items: center; */
   /* height: 100vh; */
 }
-.header {
-  background-color: lightblue;
-  height: 56px;
-}
 
 .main {
   flex: 1;
@@ -39,12 +35,6 @@
   .container {
     /* flex-direction: row; */
     height: 1500px;
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    width: 100%;
   }
 
   .main {

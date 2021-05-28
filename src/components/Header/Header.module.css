@@ -1,0 +1,12 @@
+.header {
+  background-color: lightblue;
+  height: 56px;
+}
+
+@media (min-width: 600px) {
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Header } from "src/components/Header";
 import classes from "src/styles/Ref.module.css";
 
 export default function Ref() {
@@ -8,7 +9,7 @@ export default function Ref() {
         <title>Refrigerator Page</title>
       </Head>
 
-      <header className={classes.header}>冷蔵庫</header>
+      <Header title="冷蔵庫" />
       <main className={classes.main}>fooo</main>
       <nav className={classes.nav}>
         <ul className={classes.ul}>
