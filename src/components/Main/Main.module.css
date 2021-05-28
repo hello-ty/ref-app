@@ -1,0 +1,12 @@
+.main {
+  flex: 1;
+  background-color: lightpink;
+  min-height: 100vh;
+}
+
+@media (min-width: 600px) {
+  .main {
+    margin-left: 56px;
+    margin-top: 56px;
+  }
+}

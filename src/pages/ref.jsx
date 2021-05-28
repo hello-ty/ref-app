@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { Header } from "src/components/Header";
+import { Main } from "src/components/Main";
 import classes from "src/styles/Ref.module.css";
 
 export default function Ref() {
@@ -10,7 +11,7 @@ export default function Ref() {
       </Head>
 
       <Header title="冷蔵庫" />
-      <main className={classes.main}>fooo</main>
+      <Main content="fooo" />
       <nav className={classes.nav}>
         <ul className={classes.ul}>
           <li className={classes.li}>list1</li>

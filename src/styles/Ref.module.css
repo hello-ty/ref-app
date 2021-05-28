@@ -8,11 +8,6 @@
   /* height: 100vh; */
 }
 
-.main {
-  flex: 1;
-  background-color: lightpink;
-}
-
 .nav {
   position: fixed;
   background-color: lightgreen;
@@ -35,11 +30,6 @@
   .container {
     /* flex-direction: row; */
     height: 1500px;
-  }
-
-  .main {
-    margin-left: 56px;
-    margin-top: 56px;
   }
 
   .nav {
