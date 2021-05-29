@@ -8,47 +8,9 @@
   /* height: 100vh; */
 }
 
-.nav {
-  position: fixed;
-  background-color: lightgreen;
-  bottom: 0;
-  width: 100%;
-}
-
-.ul {
-  display: flex;
-}
-
-.li {
-  background-color: lightyellow;
-  flex-direction: column;
-  flex: 1;
-  height: 56px;
-}
-
 @media (min-width: 600px) {
   .container {
     /* flex-direction: row; */
-    height: 1500px;
-  }
-
-  .nav {
-    top: 56px;
-    left: 0;
-    width: 56px;
-    bottom: initial;
-  }
-
-  .ul {
-    flex-direction: column;
-    min-height: 100vh;
-    /* flex: 1; */
-  }
-
-  .li {
-    /* flex-flow: column; */
-    flex-direction: unset;
-    /* height: initial; */
-    /* flex: unset; */
+    /* height: 1500px; */
   }
 }
