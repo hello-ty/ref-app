@@ -11,9 +11,18 @@ export function Main() {
     { name: "card7" },
   ];
 
+  const genres = [
+    { genre: "野菜" },
+    { genre: "肉類" },
+    { genre: "魚介類" },
+    { genre: "調味料" },
+    { genre: "デザート" },
+  ];
+
   return (
     <div>
       <main className={classes.main}>
+        <div className={classes.bar}></div>
         <div className={classes.card_container}>
           {data.map((d) => (
             <div className={classes.card}>{d.name}</div>
