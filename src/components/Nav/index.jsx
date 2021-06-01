@@ -12,7 +12,9 @@ export function Nav(props) {
       <nav className={classes.nav}>
         <ul className={classes.ul}>
           {data.map((d) => (
-            <li className={classes.li}>{d.title}</li>
+            <li className={classes.li} key={d.title}>
+              {d.title}
+            </li>
           ))}
         </ul>
       </nav>
