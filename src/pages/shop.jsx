@@ -110,14 +110,14 @@ export default function Ref() {
         {foods.map((d, i) => (
           <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
             {d.name}
-            {d.genre}
-            {d.unit}
+            {/* {d.genre} */}
+            {/* {d.unit} */}
           </div>
         ))}
         {flag ? (
           <div>
             {dish.name}
-            {dish.genre}
+            {/* {dish.genre} */}
             <button onClick={handlePlus}>＋</button>
             <button onClick={handleSub}>−</button>
             {count}
