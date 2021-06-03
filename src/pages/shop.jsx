@@ -13,15 +13,26 @@ const db = firebase.firestore();
 
 export default function Ref() {
   const [flag, setFlag] = useState(false);
+  const [flag02, setFlag02] = useState(false);
+  const [name, setName] = useState("");
   const [foods, setFoods] = useState([]);
   const [dish, setDish] = useState([]);
   const [count, setCount] = useState(0);
   const [stock, setStock] = useState([]);
+  const [now, setNow] = useState("野菜");
   const router = useRouter();
+
+  const data = [
+    { genre: "野菜", word: "vegetable" },
+    { genre: "肉類", word: "meat" },
+    { genre: "魚介類", word: "fish" },
+    { genre: "デザート", word: "fruit" },
+  ];
 
   useEffect(async () => {
     await db
       .collection("foods")
+      .where("genre", "==", now)
       .get()
       .then((snapshot) => {
         let mydata = [];
@@ -35,7 +46,7 @@ export default function Ref() {
         });
         setFoods(mydata);
       });
-  }, []);
+  }, [now]);
 
   useEffect(async () => {
     await db
@@ -78,6 +89,22 @@ export default function Ref() {
     }
   }, [count]);
 
+  const handleChange = useCallback(
+    (e) => {
+      console.log(e);
+      setNow(() => e);
+    },
+    [now]
+  );
+
+  const handleRefAdd = useCallback((e) => {
+    db.collection("stocks")
+      .add(ob)
+      .then((ref) => {
+        setCh(!ch);
+      });
+  }, []);
+
   const doAction = (e) => {
     if (count > 0) {
       const ob = {
@@ -105,29 +132,50 @@ export default function Ref() {
       <Head>
         <title>Refrigerator Page</title>
       </Head>
-      <Header title="冷蔵庫" />
+      <Header title="買い物" />
       <Main>
-        {foods.map((d, i) => (
-          <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
-            {d.name}
-            {/* {d.genre} */}
-            {/* {d.unit} */}
-          </div>
-        ))}
-        {flag ? (
-          <div>
-            {dish.name}
-            {/* {dish.genre} */}
-            <button onClick={handlePlus}>＋</button>
-            <button onClick={handleSub}>−</button>
-            {count}
-            {dish.unit}
-            <button onClick={() => setFlag(!flag)}>閉じる</button>
-            <button onClick={doAction}>追加</button>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className={classes.bar}>
+          {data.map((d) => (
+            <button onClick={() => handleChange(d.genre)} key={d.genre}>
+              {d.genre}
+            </button>
+          ))}
+          {/* <button onClick={handleRefAdd}>+</button> */}
+        </div>
+        <div className={classes.card_container}>
+          {foods.map((d, i) => (
+            <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
+              {d.name}/{d.unit}
+            </div>
+          ))}
+          {flag ? (
+            <div>
+              {dish.name}
+              <button onClick={handlePlus}>＋</button>
+              <button onClick={handleSub}>−</button>
+              {count}
+              {dish.unit}
+              <button onClick={() => setFlag(!flag)}>閉じる</button>
+              <button onClick={doAction}>追加</button>
+            </div>
+          ) : (
+            ""
+          )}
+          {/* {flag02 ? (
+            <div>
+              <label for="name">食材名</label>
+              <input name="name" type="text" value={name} onChange={changeName}/>
+              <label for="number">数量</label>
+              <input name="number" type="number" value={number} onChange={changeQuantity}/>
+              <label for="unit">単位</label>
+              <input name="unit" type="text" value={unit} onChange={changeUnit}/>
+              <button onClick={() => setFlag02(!flag02)}>閉じる</button>
+              <button onClick={}>追加</button>
+            </div>
+          ) : (
+            ""
+          )} */}
+        </div>
       </Main>
 
       <Nav />

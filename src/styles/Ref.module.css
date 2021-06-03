@@ -8,6 +8,18 @@
   /* height: 100vh; */
 }
 
+.card_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: lightgrey;
+  padding: 22px;
+  /* margin-left: 10px;
+  margin-right: 10px; */
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
 .card {
   float: left;
   background-color: lightseagreen;
