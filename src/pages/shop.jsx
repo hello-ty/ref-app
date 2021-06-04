@@ -14,13 +14,17 @@ const db = firebase.firestore();
 export default function Ref() {
   const [flag, setFlag] = useState(false);
   const [flag02, setFlag02] = useState(false);
-  const [name, setName] = useState("");
   const [foods, setFoods] = useState([]);
   const [dish, setDish] = useState([]);
   const [count, setCount] = useState(0);
   const [stock, setStock] = useState([]);
   const [now, setNow] = useState("野菜");
   const router = useRouter();
+  // input要素
+  const [name, setName] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [unit, setUnit] = useState("");
+  const [genre, setGenre] = useState("");
 
   const data = [
     { genre: "野菜", word: "vegetable" },
@@ -97,14 +101,6 @@ export default function Ref() {
     [now]
   );
 
-  const handleRefAdd = useCallback((e) => {
-    db.collection("stocks")
-      .add(ob)
-      .then((ref) => {
-        setCh(!ch);
-      });
-  }, []);
-
   const doAction = (e) => {
     if (count > 0) {
       const ob = {
@@ -127,6 +123,42 @@ export default function Ref() {
     }
   };
 
+  // input処理
+  const handleRefAdd = () => {
+    if (name !== "" && quantity !== 0 && genre !== "" && unit !== "") {
+      const ob = {
+        food_name: name,
+        food_quantity: quantity,
+        food_genre: genre,
+        food_unit: unit,
+      };
+      db.collection("stocks")
+        .add(ob)
+        .then((ref) => {
+          setFlag02(!flag02);
+        });
+    } else {
+      alert("未入力部分があります");
+      return;
+    }
+  };
+
+  const handleSelect = useCallback((e) => {
+    setGenre(e.target.value);
+  });
+
+  const changeName = useCallback((e) => {
+    setName(e.target.value.trim());
+  }, []);
+
+  const changeQuantity = useCallback((e) => {
+    setQuantity(e.target.value.trim());
+  }, []);
+
+  const changeUnit = useCallback((e) => {
+    setUnit(e.target.value.trim());
+  }, []);
+
   return (
     <div className={classes.container}>
       <Head>
@@ -140,7 +172,7 @@ export default function Ref() {
               {d.genre}
             </button>
           ))}
-          {/* <button onClick={handleRefAdd}>+</button> */}
+          <button onClick={() => setFlag02(!flag02)}>+</button>
         </div>
         <div className={classes.card_container}>
           {foods.map((d, i) => (
@@ -161,20 +193,41 @@ export default function Ref() {
           ) : (
             ""
           )}
-          {/* {flag02 ? (
+          {flag02 ? (
             <div>
-              <label for="name">食材名</label>
-              <input name="name" type="text" value={name} onChange={changeName}/>
-              <label for="number">数量</label>
-              <input name="number" type="number" value={number} onChange={changeQuantity}/>
-              <label for="unit">単位</label>
-              <input name="unit" type="text" value={unit} onChange={changeUnit}/>
+              <label htmlFor="name">食材名</label>
+              <input
+                name="name"
+                type="text"
+                value={name}
+                onChange={changeName}
+              />
+              <label htmlFor="number">数量</label>
+              <input
+                name="number"
+                type="number"
+                value={quantity}
+                onChange={changeQuantity}
+              />
+              <label htmlFor="unit">単位</label>
+              <input
+                name="unit"
+                type="text"
+                value={unit}
+                onChange={changeUnit}
+              />
+              <label htmlFor="genre">分類</label>
+              <select name="genre" value={genre} onChange={handleSelect}>
+                {data.map((d, i) => (
+                  <option key={d.genre}>{d.genre}</option>
+                ))}
+              </select>
               <button onClick={() => setFlag02(!flag02)}>閉じる</button>
-              <button onClick={}>追加</button>
+              <button onClick={() => handleRefAdd()}>追加</button>
             </div>
           ) : (
             ""
-          )} */}
+          )}
         </div>
       </Main>
 
