@@ -14,6 +14,7 @@ const db = firebase.firestore();
 export default function Ref() {
   const [flag, setFlag] = useState(false);
   const [flag02, setFlag02] = useState(false);
+  const [ch, setCh] = useState(false);
   const [foods, setFoods] = useState([]);
   const [dish, setDish] = useState([]);
   const [count, setCount] = useState(0);
@@ -22,7 +23,6 @@ export default function Ref() {
   const router = useRouter();
   // input要素
   const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState(0);
   const [unit, setUnit] = useState("");
   const [genre, setGenre] = useState("");
 
@@ -31,6 +31,22 @@ export default function Ref() {
     { genre: "肉類", word: "meat" },
     { genre: "魚介類", word: "fish" },
     { genre: "デザート", word: "fruit" },
+  ];
+
+  const genres = [
+    { genre: "未選択" },
+    { genre: "野菜" },
+    { genre: "肉類" },
+    { genre: "魚介類" },
+    { genre: "デザート" },
+  ];
+
+  const units = [
+    { union: "未選択" },
+    { union: "個" },
+    { union: "匹" },
+    { union: "g" },
+    { union: "ml" },
   ];
 
   useEffect(async () => {
@@ -50,7 +66,7 @@ export default function Ref() {
         });
         setFoods(mydata);
       });
-  }, [now]);
+  }, [now, ch]);
 
   useEffect(async () => {
     await db
@@ -125,17 +141,17 @@ export default function Ref() {
 
   // input処理
   const handleRefAdd = () => {
-    if (name !== "" && quantity !== 0 && genre !== "" && unit !== "") {
+    if (name !== "" && genre !== "" && unit !== "") {
       const ob = {
-        food_name: name,
-        food_quantity: quantity,
-        food_genre: genre,
-        food_unit: unit,
+        food: name,
+        genre: genre,
+        unit: unit,
       };
-      db.collection("stocks")
+      db.collection("foods")
         .add(ob)
         .then((ref) => {
           setFlag02(!flag02);
+          setCh(!ch);
         });
     } else {
       alert("未入力部分があります");
@@ -151,12 +167,8 @@ export default function Ref() {
     setName(e.target.value.trim());
   }, []);
 
-  const changeQuantity = useCallback((e) => {
-    setQuantity(e.target.value.trim());
-  }, []);
-
-  const changeUnit = useCallback((e) => {
-    setUnit(e.target.value.trim());
+  const handleSelect02 = useCallback((e) => {
+    setUnit(e.target.value);
   }, []);
 
   return (
@@ -202,26 +214,21 @@ export default function Ref() {
                 value={name}
                 onChange={changeName}
               />
-              <label htmlFor="number">数量</label>
-              <input
-                name="number"
-                type="number"
-                value={quantity}
-                onChange={changeQuantity}
-              />
-              <label htmlFor="unit">単位</label>
-              <input
-                name="unit"
-                type="text"
-                value={unit}
-                onChange={changeUnit}
-              />
+              <br />
+              <label htmlFor="unit">分類</label>
+              <select name="unit" value={unit} onChange={handleSelect02}>
+                {units.map((d, i) => (
+                  <option key={d.union}>{d.union}</option>
+                ))}
+              </select>
+              <br />
               <label htmlFor="genre">分類</label>
               <select name="genre" value={genre} onChange={handleSelect}>
-                {data.map((d, i) => (
+                {genres.map((d, i) => (
                   <option key={d.genre}>{d.genre}</option>
                 ))}
               </select>
+              <br />
               <button onClick={() => setFlag02(!flag02)}>閉じる</button>
               <button onClick={() => handleRefAdd()}>追加</button>
             </div>
