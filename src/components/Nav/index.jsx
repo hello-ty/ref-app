@@ -5,7 +5,7 @@ export function Nav(props) {
   const data = [
     { title: "冷蔵庫", address: "ref" },
     { title: "買い物", address: "shop" },
-    { title: "list3", address: "#" },
+    { title: "テスト", address: "test" },
     { title: "list4", address: "#" },
   ];
   return (

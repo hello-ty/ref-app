@@ -6,10 +6,12 @@ import { useRouter } from "next/router";
 import { Header } from "src/components/Header";
 import { Main } from "src/components/Main";
 import { Nav } from "src/components/Nav";
+import { TheEmoji } from "src/components/TheEmoji";
 
 import firebase from "firebase";
 
 const db = firebase.firestore();
+const st = firebase.storage();
 
 export default function Ref() {
   const [flag, setFlag] = useState(false);
@@ -25,6 +27,8 @@ export default function Ref() {
   const [name, setName] = useState("");
   const [unit, setUnit] = useState("");
   const [genre, setGenre] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [urls, setUrls] = useState(null);
 
   const data = [
     { genre: "野菜", word: "vegetable" },
@@ -62,6 +66,7 @@ export default function Ref() {
             name: doc.food,
             genre: doc.genre,
             unit: doc.unit,
+            url: doc.url,
           });
         });
         setFoods(mydata);
@@ -140,19 +145,44 @@ export default function Ref() {
   };
 
   // input処理
-  const handleRefAdd = () => {
+  const handleRefAdd = async () => {
     if (name !== "" && genre !== "" && unit !== "") {
-      const ob = {
-        food: name,
-        genre: genre,
-        unit: unit,
-      };
-      db.collection("foods")
-        .add(ob)
-        .then((ref) => {
-          setFlag02(!flag02);
-          setCh(!ch);
+      await st
+        .ref()
+        .child("food-image/" + name)
+        .put(photo)
+        .then(() => {
+          st.ref()
+            .child("food-image/" + name)
+            .getDownloadURL()
+            .then((url) => {
+              // setUrls(url);
+              const ob = {
+                food: name,
+                genre: genre,
+                unit: unit,
+                url: url,
+              };
+              db.collection("foods")
+                .add(ob)
+                .then((ref) => {
+                  setFlag02(!flag02);
+                  setCh(!ch);
+                });
+            });
         });
+      // const ob = {
+      //   food: name,
+      //   genre: genre,
+      //   unit: unit,
+      //   url: urls,
+      // };
+      // db.collection("foods")
+      //   .add(ob)
+      //   .then((ref) => {
+      //     setFlag02(!flag02);
+      //     setCh(!ch);
+      //   });
     } else {
       alert("未入力部分があります");
       return;
@@ -187,8 +217,11 @@ export default function Ref() {
           <button onClick={() => setFlag02(!flag02)}>+</button>
         </div>
         <div className={classes.card_container}>
+          {/* 食材リスト */}
           {foods.map((d, i) => (
             <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
+              {/* <TheEmoji emoji={"snowman"} size={30} /> */}
+              <img style={{ height: "85%" }} src={d.url} alt="null" />
               {d.name}/{d.unit}
             </div>
           ))}
@@ -207,6 +240,14 @@ export default function Ref() {
           )}
           {flag02 ? (
             <div>
+              <label htmlFor="photo">画像</label>
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                onChange={(e) => setPhoto(e.target.files[0])}
+              />
+              <br />
               <label htmlFor="name">食材名</label>
               <input
                 name="name"
