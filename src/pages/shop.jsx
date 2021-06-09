@@ -98,6 +98,7 @@ export default function Ref() {
       name: e.name,
       genre: e.genre,
       unit: e.unit,
+      url: e.url,
       quantity: 0,
     });
     setCount(0);
@@ -129,6 +130,7 @@ export default function Ref() {
         food_quantity: count,
         food_genre: dish.genre,
         food_unit: dish.unit,
+        food_url: dish.url,
       };
       stock.map((d, i) => {
         if (d.name === ob.food_name) {
@@ -221,7 +223,11 @@ export default function Ref() {
           {foods.map((d, i) => (
             <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
               {/* <TheEmoji emoji={"snowman"} size={30} /> */}
-              <img style={{ height: "85%" }} src={d.url} alt="null" />
+              <img
+                style={{ height: "50px", display: "block" }}
+                src={d.url}
+                alt="null"
+              />
               {d.name}/{d.unit}
             </div>
           ))}

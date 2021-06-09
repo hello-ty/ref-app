@@ -41,6 +41,7 @@ export default function Ref() {
             quantity: doc.food_quantity,
             genre: doc.food_genre,
             unit: doc.food_unit,
+            url: doc.food_url,
             id: document.id,
           });
         });
@@ -54,6 +55,7 @@ export default function Ref() {
       genre: e.genre,
       unit: e.unit,
       quantity: e.quantity,
+      url: e.url,
       id: e.id,
     });
     setCount(e.quantity);
@@ -77,6 +79,7 @@ export default function Ref() {
         food_quantity: count,
         food_genre: dish.genre,
         food_unit: dish.unit,
+        food_url: dish.url,
       };
       foods.map((d, i) => {
         if (d.name === ob.food_name) {
@@ -128,6 +131,11 @@ export default function Ref() {
         <div className={classes.card_container}>
           {foods.map((d, i) => (
             <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
+              <img
+                style={{ height: "50px", display: "block" }}
+                src={d.url}
+                alt="null"
+              />
               {d.name}
               {d.quantity}
               {/* {d.genre} */}
@@ -135,17 +143,30 @@ export default function Ref() {
             </div>
           ))}
           {flag ? (
-            <div>
-              {dish.name}
-              {/* {dish.genre} */}
-              <button onClick={handlePlus}>＋</button>
-              <button onClick={handleSub}>−</button>
-              {count}
-              {dish.unit}
-              <button onClick={() => setFlag(!flag)}>閉じる</button>
-              <button onClick={doAction}>編集</button>
-              <button onClick={() => doDelete(dish)}>削除</button>
-            </div>
+            <>
+              <div className={classes.modal}>
+                <div className={classes.modal_container}>
+                  <img style={{ height: "50px" }} src={dish.url} alt="null" />
+                  <br />
+                  {dish.name}
+                  <br />
+                  {/* {dish.genre} */}
+                  {count}
+                  {dish.unit}
+                  <br />
+                  <button onClick={handlePlus}>＋</button>
+                  <button onClick={handleSub}>−</button>
+                  {/* <button onClick={() => setFlag(!flag)}>閉じる</button> */}
+                  <br />
+                  <button onClick={doAction}>個数を変更</button>
+                  <button onClick={() => doDelete(dish)}>削除</button>
+                </div>
+              </div>
+              <div
+                className={classes.back}
+                onClick={() => setFlag(!flag)}
+              ></div>
+            </>
           ) : (
             ""
           )}
