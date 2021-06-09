@@ -217,7 +217,9 @@ export default function Ref() {
               {d.genre}
             </button>
           ))}
-          <button onClick={() => setFlag02(!flag02)}>+</button>
+          <button onClick={() => setFlag02(!flag02)}>
+            <TheEmoji emoji="heavy_plus_sign" size={30} />
+          </button>
         </div>
         <div className={classes.card_container}>
           {/* 食材リスト */}
@@ -232,53 +234,72 @@ export default function Ref() {
             </div>
           ))}
           {flag ? (
-            <div>
-              {dish.name}
-              <button onClick={handlePlus}>＋</button>
-              <button onClick={handleSub}>−</button>
-              {count}
-              {dish.unit}
-              <button onClick={() => setFlag(!flag)}>閉じる</button>
-              <button onClick={doAction}>追加</button>
-            </div>
+            <>
+              <div className={classes.modal}>
+                <div className={classes.modal_container}>
+                  {dish.name}
+                  <br />
+                  {count}
+                  {dish.unit}
+                  <br />
+                  <button onClick={handlePlus}>＋</button>
+                  <button onClick={handleSub}>−</button>
+                  <br />
+                  <button onClick={() => setFlag(!flag)}>閉じる</button>
+                  <button onClick={doAction}>追加</button>
+                </div>
+              </div>
+              <div
+                className={classes.back}
+                onClick={() => setFlag(!flag)}
+              ></div>
+            </>
           ) : (
             ""
           )}
           {flag02 ? (
-            <div>
-              <label htmlFor="photo">画像</label>
-              <input
-                type="file"
-                name="avatar"
-                id="avatar"
-                onChange={(e) => setPhoto(e.target.files[0])}
-              />
-              <br />
-              <label htmlFor="name">食材名</label>
-              <input
-                name="name"
-                type="text"
-                value={name}
-                onChange={changeName}
-              />
-              <br />
-              <label htmlFor="unit">分類</label>
-              <select name="unit" value={unit} onChange={handleSelect02}>
-                {units.map((d, i) => (
-                  <option key={d.union}>{d.union}</option>
-                ))}
-              </select>
-              <br />
-              <label htmlFor="genre">分類</label>
-              <select name="genre" value={genre} onChange={handleSelect}>
-                {genres.map((d, i) => (
-                  <option key={d.genre}>{d.genre}</option>
-                ))}
-              </select>
-              <br />
-              <button onClick={() => setFlag02(!flag02)}>閉じる</button>
-              <button onClick={() => handleRefAdd()}>追加</button>
-            </div>
+            <>
+              <div className={classes.modal}>
+                <div className={classes.modal_container}>
+                  <label htmlFor="photo">画像</label>
+                  <input
+                    type="file"
+                    name="avatar"
+                    id="avatar"
+                    onChange={(e) => setPhoto(e.target.files[0])}
+                  />
+                  <br />
+                  <label htmlFor="name">食材名</label>
+                  <input
+                    name="name"
+                    type="text"
+                    value={name}
+                    onChange={changeName}
+                  />
+                  <br />
+                  <label htmlFor="unit">単位</label>
+                  <select name="unit" value={unit} onChange={handleSelect02}>
+                    {units.map((d, i) => (
+                      <option key={d.union}>{d.union}</option>
+                    ))}
+                  </select>
+                  <br />
+                  <label htmlFor="genre">分類</label>
+                  <select name="genre" value={genre} onChange={handleSelect}>
+                    {genres.map((d, i) => (
+                      <option key={d.genre}>{d.genre}</option>
+                    ))}
+                  </select>
+                  <br />
+                  <button onClick={() => setFlag02(!flag02)}>閉じる</button>
+                  <button onClick={() => handleRefAdd()}>追加</button>
+                </div>
+              </div>
+              <div
+                className={classes.back}
+                onClick={() => setFlag02(!flag02)}
+              ></div>
+            </>
           ) : (
             ""
           )}
