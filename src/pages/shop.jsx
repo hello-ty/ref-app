@@ -31,10 +31,10 @@ export default function Ref() {
   const [urls, setUrls] = useState(null);
 
   const data = [
-    { genre: "野菜", word: "vegetable" },
-    { genre: "肉類", word: "meat" },
-    { genre: "魚介類", word: "fish" },
-    { genre: "デザート", word: "fruit" },
+    { genre: "野菜", emoji: "green_salad" },
+    { genre: "肉類", emoji: "cut_of_meat" },
+    { genre: "魚介類", emoji: "fish" },
+    { genre: "デザート", emoji: "cake" },
   ];
 
   const genres = [
@@ -213,6 +213,7 @@ export default function Ref() {
         <div className={classes.bar}>
           {data.map((d) => (
             <button onClick={() => handleChange(d.genre)} key={d.genre}>
+              <TheEmoji emoji={d.emoji} size={30} />
               {d.genre}
             </button>
           ))}
@@ -222,7 +223,6 @@ export default function Ref() {
           {/* 食材リスト */}
           {foods.map((d, i) => (
             <div className={classes.card} key={i} onClick={() => handleAdd(d)}>
-              {/* <TheEmoji emoji={"snowman"} size={30} /> */}
               <img
                 style={{ height: "50px", display: "block" }}
                 src={d.url}

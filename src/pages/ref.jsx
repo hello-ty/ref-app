@@ -8,6 +8,7 @@ import { Main } from "src/components/Main";
 import { Nav } from "src/components/Nav";
 
 import firebase from "firebase";
+import { TheEmoji } from "src/components/TheEmoji";
 
 const db = firebase.firestore();
 
@@ -21,10 +22,10 @@ export default function Ref() {
   const router = useRouter();
 
   const data = [
-    { genre: "野菜", word: "vegetable" },
-    { genre: "肉類", word: "meat" },
-    { genre: "魚介類", word: "fish" },
-    { genre: "デザート", word: "fruit" },
+    { genre: "野菜", emoji: "green_salad" },
+    { genre: "肉類", emoji: "cut_of_meat" },
+    { genre: "魚介類", emoji: "fish" },
+    { genre: "デザート", emoji: "cake" },
   ];
 
   useEffect(async () => {
@@ -124,6 +125,7 @@ export default function Ref() {
         <div className={classes.bar}>
           {data.map((d) => (
             <button onClick={() => handleChange(d.genre)} key={d.genre}>
+              <TheEmoji emoji={d.emoji} size={30} />
               {d.genre}
             </button>
           ))}
