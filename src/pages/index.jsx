@@ -44,7 +44,7 @@ export default function Home() {
       </Head>
 
       <header>
-        <h1>冷蔵庫</h1>
+        <h1 class="text-5xl font-bold">冷蔵庫</h1>
       </header>
       {/* <label htmlFor="username">ユーザーネーム</label>
       <input

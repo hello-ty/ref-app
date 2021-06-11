@@ -1,64 +1,50 @@
 import Head from "next/head";
-import classes from "src/styles/Ref.module.css";
-
-import { Header } from "src/components/Header";
-import { Main } from "src/components/Main";
-import { Nav } from "src/components/Nav";
-
-import firebase from "firebase";
-import { useState } from "react";
-
-const db = firebase.firestore();
-const iconRef = firebase.storage();
+// import classes from "src/styles/Test.module.css";
 
 export default function Test() {
-  const [avatar, setAvatar] = useState(null);
-  const [name, setName] = useState({ name: "tatsuki" });
-  const [urls, setUrls] = useState(null);
-  console.log(avatar);
-
-  const setImage = () => {
-    // setAvatar(() => e.target.files[0]);
-    iconRef
-      .ref()
-      .child("user-image/" + name.name)
-      .put(avatar)
-      .then(() => {
-        console.log("win");
-        iconRef
-          .ref()
-          .child("user-image/" + name.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrls(url);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
-    <div className={classes.container}>
+    <div>
       <Head>
         <title>Refrigerator Page</title>
       </Head>
-      <Header title="テスト" />
-      <Main>
-        <div className={classes.container}>
-          <label htmlFor="avatar">画像</label>
-          <input
-            type="file"
-            name="avatar"
-            id="avatar"
-            onChange={(e) => setAvatar(e.target.files[0])}
-          />
-          <button onClick={setImage}>送信</button>
-          <img style={{ width: "100px" }} src={urls} alt="null" />
+      <div className="flex flex-col min-h-screen">
+        <header className="text-gray-600 body-font bg-red-200">
+          <div className="container mx-auto flex p-3 flex-col items-center">
+            <a className="flex title-font font-medium items-center text-gray-900 mb-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-10 h-10 text-white p-2 bg-red-500 rounded-full"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
+              <span className="ml-3 text-xl">冷蔵庫</span>
+            </a>
+          </div>
+        </header>
+        <div className="flex flex-row flex-1">
+          <nav className="text-gray-600 body-font bg-yellow-200 w-64px">
+            <div className="">
+              <ul className="flex flex-col">
+                <list>list1</list>
+                <list>list2</list>
+                <list>list3</list>
+                <list>list4</list>
+              </ul>
+            </div>
+          </nav>
+          <main className="text-gray-600 body-font bg-green-200 flex-1">
+            <div>
+              <p>a</p>
+            </div>
+          </main>
         </div>
-      </Main>
-
-      <Nav />
+      </div>
     </div>
   );
 }
