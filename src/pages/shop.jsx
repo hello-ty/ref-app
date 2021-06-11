@@ -173,18 +173,6 @@ export default function Ref() {
                 });
             });
         });
-      // const ob = {
-      //   food: name,
-      //   genre: genre,
-      //   unit: unit,
-      //   url: urls,
-      // };
-      // db.collection("foods")
-      //   .add(ob)
-      //   .then((ref) => {
-      //     setFlag02(!flag02);
-      //     setCh(!ch);
-      //   });
     } else {
       alert("未入力部分があります");
       return;
