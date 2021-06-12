@@ -7,7 +7,7 @@ export function Nav(props) {
     { title: "冷蔵庫", emoji: "cold_face", address: "ref" },
     { title: "買い物", emoji: "shopping_trolley", address: "shop" },
     { title: "テスト", emoji: "earth_asia", address: "test" },
-    { title: "list4", emoji: "earth_asia", address: "#" },
+    { title: "list4", emoji: "earth_asia", address: "shoper" },
   ];
   return (
     <div>
