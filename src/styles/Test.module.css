@@ -1,3 +1,15 @@
-/* .conatiner {
-  min-height: 100vh;
-} */
+.card {
+  width: calc((100% - 0.75rem) / 2);
+}
+
+@media (min-width: 640px) {
+  .card {
+    width: calc((100% - 1.5rem) / 3);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    width: calc((100% - 3rem) / 5);
+  }
+}
