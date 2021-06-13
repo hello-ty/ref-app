@@ -164,7 +164,7 @@ export default function Ref() {
                 <ul>
                   {data.map((d) => (
                     <list
-                      className="bg-blue-50 mr-4 py-2 px-3 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
+                      className="bg-blue-50 mr-2 py-2 px-3 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
                       onClick={() => handleChange(d.genre)}
                       key={d.genre}
                     >

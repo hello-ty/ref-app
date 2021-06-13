@@ -240,7 +240,7 @@ export default function Shop() {
                 <ul>
                   {data.map((d) => (
                     <list
-                      className="bg-blue-50 mr-4 py-2 px-3 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
+                      className="bg-blue-50 mr-2 py-2 px-3 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white"
                       onClick={() => handleChange(d.genre)}
                       key={d.genre}
                     >
@@ -344,8 +344,11 @@ export default function Shop() {
         )}
         {flag02 ? (
           <>
-            <div className="">
-              <div className="">
+            <div
+              className="text-gray-600 body-font container w-24"
+              className={classes.modal}
+            >
+              <div className="p-6">
                 <label htmlFor="photo">画像</label>
                 <input
                   type="file"
