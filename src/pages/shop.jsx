@@ -226,7 +226,7 @@ export default function Shop() {
               <Link href={"/shop"}>
                 <span className="mx-auto cursor-pointer">買い物</span>
               </Link>
-              <Link href={"/shoper"}>
+              <Link href={"/ref"}>
                 <span className="mx-auto cursor-pointer">なうレピ</span>
               </Link>
               <Link href={"/ref"}>
