@@ -36,14 +36,15 @@
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   height: 50vh;
-  width: 250px;
+  width: 280px;
   transform: translate(-50%, -50%);
-  background-color: lightgrey;
+  background-color: white;
   z-index: 1000;
+  border-radius: 0.5rem;
 }
 
 .modal_container {
@@ -59,7 +60,8 @@
   right: 0;
   left: 0;
   margin: auto;
-  background: rgba(256, 256, 256, 0.8);
+  /* background: rgba(256, 256, 256, 0.8); */
+  background-color: rgba(239, 246, 255, 0.4);
   -ms-filter: blur(6px);
   filter: blur(6px);
 }

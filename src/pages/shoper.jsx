@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import classes from "src/styles/Test.module.css";
+import styles from "src/styles/Ref.module.css";
 import { useRouter } from "next/router";
 
 import { Header } from "src/components/Header";
@@ -283,31 +284,52 @@ export default function Ref() {
         </div>
         {/* <div className={classes.card_container}> */}
         {/* 食材リスト */}
-        {/* {flag ? (
+        {flag ? (
           <>
-            <div className={classes.modal}>
-              <div className={classes.modal_container}>
-                {dish.name}
-                <br />
-                {count}
-                {dish.unit}
-                <br />
-                <button onClick={handlePlus}>＋</button>
-                <button onClick={handleSub}>−</button>
+            <div
+              className="text-gray-600 body-font container w-24"
+              className={styles.modal}
+            >
+              <div className="p-6">
+                <img
+                  style={{ height: "70px", display: "block" }}
+                  src={dish.url}
+                  alt="null"
+                  className="h-20 rounded w-full object-cover object-center mb-6"
+                />
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
+                  {dish.name}
+                </h2>
+                <p className="leading-relaxed text-base">
+                  {count}
+                  {dish.unit}
+                </p>
+                <button
+                  onClick={handlePlus}
+                  className=" mx-auto text-gray-600 bg-blue-200 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                >
+                  +1
+                </button>
+                <button
+                  onClick={handleSub}
+                  className=" mx-auto text-gray-600 bg-blue-200 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                >
+                  -1
+                </button>
                 <br />
                 <button onClick={() => setFlag(!flag)}>閉じる</button>
                 <button onClick={doAction}>追加</button>
               </div>
             </div>
-            <div className={classes.back} onClick={() => setFlag(!flag)}></div>
+            <div className={styles.back} onClick={() => setFlag(!flag)}></div>
           </>
         ) : (
           ""
         )}
         {flag02 ? (
           <>
-            <div className={classes.modal}>
-              <div className={classes.modal_container}>
+            <div className="">
+              <div className="">
                 <label htmlFor="photo">画像</label>
                 <input
                   type="file"
@@ -349,7 +371,7 @@ export default function Ref() {
           </>
         ) : (
           ""
-        )} */}
+        )}
       </div>
     </div>
   );
