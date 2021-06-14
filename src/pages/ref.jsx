@@ -136,8 +136,12 @@ export default function Ref() {
               <span className="ml-3 text-2xl cursor-pointer">冷蔵庫</span>
             </a>
             <div className="md:border-l md:border-gray-400 flex items-center ml-3 pl-3">
-              <a class="mr-5 hover:text-gray-900 hidden sm:block">冷蔵庫</a>
-              <a class="mr-5 hover:text-gray-900 hidden sm:block">買い物</a>
+              <Link href={"/ref"}>
+                <a class="mr-5 hover:text-gray-900 hidden sm:block">冷蔵庫</a>
+              </Link>
+              <Link href={"/shop"}>
+                <a class="mr-5 hover:text-gray-900 hidden sm:block">買い物</a>
+              </Link>
             </div>
           </div>
         </header>

@@ -209,11 +209,15 @@ export default function Shop() {
               >
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
               </svg>
-              <span className="ml-3 text-2xl cursor-pointer">冷蔵庫</span>
+              <span className="ml-3 text-2xl cursor-pointer">買い物</span>
             </a>
             <div className="md:border-l md:border-gray-400 flex items-center ml-3 pl-3">
-              <a class="mr-5 hover:text-gray-900 hidden sm:block">冷蔵庫</a>
-              <a class="mr-5 hover:text-gray-900 hidden sm:block">買い物</a>
+              <Link href={"/ref"}>
+                <a class="mr-5 hover:text-gray-900 hidden sm:block">冷蔵庫</a>
+              </Link>
+              <Link href={"/shop"}>
+                <a class="mr-5 hover:text-gray-900 hidden sm:block">買い物</a>
+              </Link>
             </div>
           </div>
         </header>
@@ -263,7 +267,7 @@ export default function Shop() {
                     <div
                       key={i}
                       onClick={() => handleAdd(d)}
-                      className="xl:w-1/4 md:w-1/2 cursor-pointer"
+                      className="xl:w-1/4 md:w-1/2 cursor-pointer hover:bg-blue-500"
                       className={classes.card}
                     >
                       <div className="bg-white p-6 rounded-lg">
