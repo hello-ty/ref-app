@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 冷蔵庫アプリ
 
-## Getting Started
+## 使用技術
 
-First, run the development server:
+- Nextjs
+- Firebase(Firestore,Storage)
+- Tailwindcss
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## 要件定義
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+冷蔵庫の中身を管理できる Web アプリを作りました。
+買い物の最中に冷蔵庫の中身が確認できて、余分に買ってしまうのを
+防止するコンセプトです。
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## 苦労した点
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Storage に画像をアップロードして、画面に表示させること
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 今後やりたいこと
 
-## Learn More
+- レシピ機能を追加する
+- UI デザインを細部まで作り込む
 
-To learn more about Next.js, take a look at the following resources:
+## 機能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### 冷蔵庫
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![スクリーンショット 2021-06-14 23 40 39](https://user-images.githubusercontent.com/78245834/121911328-a39af100-cd6a-11eb-816b-047ab8809a24.png)
 
-## Deploy on Vercel
+#### 買い物
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![スクリーンショット 2021-06-14 23 40 47](https://user-images.githubusercontent.com/78245834/121911550-d218cc00-cd6a-11eb-9b10-3a7bd3726982.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#####　レスポンシブ対応
