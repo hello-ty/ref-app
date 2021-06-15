@@ -1,6 +1,5 @@
 .card {
   width: calc((100% - 0.75rem) / 2);
-  cursor: pointer;
 }
 
 .modal {

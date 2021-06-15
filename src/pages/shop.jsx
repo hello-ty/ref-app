@@ -6,6 +6,7 @@ import { TheEmoji } from "src/components/TheEmoji";
 import firebase from "firebase";
 import "src/components/fire";
 import Link from "next/link";
+import clsx from "clsx";
 
 const db = firebase.firestore();
 const st = firebase.storage();
@@ -267,8 +268,7 @@ export default function Shop() {
                     <div
                       key={i}
                       onClick={() => handleAdd(d)}
-                      className="xl:w-1/4 md:w-1/2 cursor-pointer hover:bg-blue-500"
-                      className={classes.card}
+                      className={clsx("xl:w-1/4 md:w-1/2", classes.card)}
                     >
                       <div className="bg-white p-6 rounded-lg">
                         <img
@@ -280,7 +280,14 @@ export default function Shop() {
                         <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
                           {d.name}
                         </h2>
-                        <p className="leading-relaxed text-base">{d.unit}</p>
+                        <div className="flex justify-between">
+                          <span className="leading-relaxed text-base">
+                            {d.unit}
+                          </span>
+                          <p className="cursor-pointer">
+                            <TheEmoji emoji="shopping_trolley" size={35} />
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -292,8 +299,10 @@ export default function Shop() {
         {flag ? (
           <>
             <div
-              className="text-gray-600 body-font container w-24"
-              className={classes.modal}
+              className={clsx(
+                "text-gray-600 body-font container w-24",
+                classes.modal
+              )}
             >
               <div className="p-6">
                 <img
@@ -349,8 +358,10 @@ export default function Shop() {
         {flag02 ? (
           <>
             <div
-              className="text-gray-600 body-font container w-24"
-              className={classes.modal}
+              className={clsx(
+                "text-gray-600 body-font container w-24",
+                classes.modal
+              )}
             >
               <div className="p-6">
                 <label htmlFor="photo">画像</label>

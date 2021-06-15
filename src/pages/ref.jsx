@@ -6,6 +6,7 @@ import "src/components/fire";
 import firebase from "firebase";
 import { TheEmoji } from "src/components/TheEmoji";
 import Link from "next/link";
+import clsx from "clsx";
 
 const db = firebase.firestore();
 
@@ -188,8 +189,10 @@ export default function Ref() {
                     <div
                       key={i}
                       onClick={() => handleAdd(d)}
-                      className="xl:w-1/4 md:w-1/2 cursor-pointer"
-                      className={classes.card}
+                      className={clsx(
+                        "xl:w-1/4 md:w-1/2 cursor-pointer",
+                        classes.card
+                      )}
                     >
                       <div className="bg-white p-6 rounded-lg">
                         <img
@@ -216,8 +219,10 @@ export default function Ref() {
         {flag ? (
           <>
             <div
-              className="text-gray-600 body-font container w-24"
-              className={classes.modal}
+              className={clsx(
+                "text-gray-600 body-font container w-24",
+                classes.modal
+              )}
             >
               <div className="p-6">
                 <img
