@@ -36,6 +36,6 @@
 
 ### 買い物
 
-![スクリーンショット 2021-06-14 23 40 47](https://user-images.githubusercontent.com/78245834/121911550-d218cc00-cd6a-11eb-9b10-3a7bd3726982.png)
+![スクリーンショット 2021-06-15 11 20 19](https://user-images.githubusercontent.com/78245834/121983244-f789f200-cdcb-11eb-9bd7-990b47d9e5c4.png)
 
 #### レスポンシブ対応
