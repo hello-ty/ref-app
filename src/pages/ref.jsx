@@ -1,30 +1,30 @@
-import { useCallback, useEffect, useState } from "react";
-import Head from "next/head";
-import classes from "src/styles/Ref.module.css";
-import { useRouter } from "next/router";
-import "src/components/fire";
-import firebase from "firebase";
-import { TheEmoji } from "src/components/TheEmoji";
-import Link from "next/link";
-import clsx from "clsx";
+import { useCallback, useEffect, useState } from "react"
+import Head from "next/head"
+import classes from "src/styles/Ref.module.css"
+import { useRouter } from "next/router"
+import "src/components/fire"
+import firebase from "firebase"
+import { TheEmoji } from "src/components/TheEmoji"
+import Link from "next/link"
+import clsx from "clsx"
 
-const db = firebase.firestore();
+const db = firebase.firestore()
 
 export default function Ref() {
-  const [foods, setFoods] = useState([]);
-  const [flag, setFlag] = useState(false);
-  const [dish, setDish] = useState([]);
-  const [count, setCount] = useState(0);
-  const [now, setNow] = useState("野菜");
-  const [ch, setCh] = useState(false);
-  const router = useRouter();
+  const [foods, setFoods] = useState([])
+  const [flag, setFlag] = useState(false)
+  const [dish, setDish] = useState([])
+  const [count, setCount] = useState(0)
+  const [now, setNow] = useState("野菜")
+  const [ch, setCh] = useState(false)
+  const router = useRouter()
 
   const data = [
     { genre: "野菜", emoji: "green_salad" },
     { genre: "肉類", emoji: "cut_of_meat" },
     { genre: "魚介類", emoji: "fish" },
     { genre: "デザート", emoji: "cake" },
-  ];
+  ]
 
   useEffect(async () => {
     await db
@@ -32,9 +32,9 @@ export default function Ref() {
       .where("food_genre", "==", now)
       .get()
       .then((snapshot) => {
-        let mydata = [];
+        let mydata = []
         snapshot.forEach((document) => {
-          const doc = document.data();
+          const doc = document.data()
           mydata.push({
             name: doc.food_name,
             quantity: doc.food_quantity,
@@ -42,11 +42,11 @@ export default function Ref() {
             unit: doc.food_unit,
             url: doc.food_url,
             id: document.id,
-          });
-        });
-        setFoods(mydata);
-      });
-  }, [now, ch]);
+          })
+        })
+        setFoods(mydata)
+      })
+  }, [now, ch])
 
   const handleAdd = useCallback((e) => {
     setDish({
@@ -56,20 +56,20 @@ export default function Ref() {
       quantity: e.quantity,
       url: e.url,
       id: e.id,
-    });
-    setCount(e.quantity);
-    return setFlag(true);
-  }, []);
+    })
+    setCount(e.quantity)
+    return setFlag(true)
+  }, [])
 
   const handlePlus = useCallback(() => {
-    setCount((prevCount) => prevCount + 1);
-  }, [count]);
+    setCount((prevCount) => prevCount + 1)
+  }, [count])
 
   const handleSub = useCallback(() => {
     if (count > 0) {
-      setCount((prevCount) => prevCount - 1);
+      setCount((prevCount) => prevCount - 1)
     }
-  }, [count]);
+  }, [count])
 
   const doAction = (e) => {
     if (count > 0) {
@@ -79,39 +79,39 @@ export default function Ref() {
         food_genre: dish.genre,
         food_unit: dish.unit,
         food_url: dish.url,
-      };
+      }
       foods.map((d, i) => {
         if (d.name === ob.food_name) {
-          db.collection("stocks").doc(d.id).delete();
+          db.collection("stocks").doc(d.id).delete()
         }
-      });
+      })
       db.collection("stocks")
         .add(ob)
         .then((ref) => {
           // router.reload();
-          setCh(!ch);
-          setFlag(!flag);
-        });
+          setCh(!ch)
+          setFlag(!flag)
+        })
     }
-  };
+  }
 
   const doDelete = (e) => {
     db.collection("stocks")
       .doc(e.id)
       .delete()
       .then((ref) => {
-        setCh(!ch);
-        setFlag(!flag);
-      });
-  };
+        setCh(!ch)
+        setFlag(!flag)
+      })
+  }
 
   const handleChange = useCallback(
     (e) => {
-      console.log(e);
-      setNow(() => e);
+      console.log(e)
+      setNow(() => e)
     },
     [now]
-  );
+  )
 
   return (
     <div>
@@ -204,10 +204,12 @@ export default function Ref() {
                         <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
                           {d.name}
                         </h2>
-                        <p className="leading-relaxed text-base">
-                          {d.quantity}
-                          {d.unit}
-                        </p>
+                        <div className="flex">
+                          <p className="leading-relaxed text-base bg-blue-200 rounded-full py-3 px-4">
+                            {d.quantity}
+                          </p>
+                          <p className="p-3">{d.unit}</p>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -257,13 +259,13 @@ export default function Ref() {
                 <div className="container mb-3">
                   <button
                     onClick={() => doDelete(dish)}
-                    className=" mx-auto mr-2 text-gray-600 bg-blue-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-base"
+                    className=" mx-auto mr-2 text-gray-600 bg-blue-200 border-0 py-2 px-3 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-base"
                   >
-                    冷蔵庫から削除
+                    全て捨てる
                   </button>
                   <button
                     onClick={doAction}
-                    className=" mx-auto text-gray-600 bg-blue-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-base"
+                    className=" mx-auto text-gray-600 bg-blue-200 border-0 py-2 px-3 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-base"
                   >
                     個数を変更
                   </button>
@@ -277,5 +279,5 @@ export default function Ref() {
         )}
       </div>
     </div>
-  );
+  )
 }

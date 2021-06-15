@@ -1,39 +1,39 @@
-import { useCallback, useEffect, useState } from "react";
-import Head from "next/head";
-import classes from "src/styles/Ref.module.css";
-import { useRouter } from "next/router";
-import { TheEmoji } from "src/components/TheEmoji";
-import firebase from "firebase";
-import "src/components/fire";
-import Link from "next/link";
-import clsx from "clsx";
+import { useCallback, useEffect, useState } from "react"
+import Head from "next/head"
+import classes from "src/styles/Ref.module.css"
+import { useRouter } from "next/router"
+import { TheEmoji } from "src/components/TheEmoji"
+import firebase from "firebase"
+import "src/components/fire"
+import Link from "next/link"
+import clsx from "clsx"
 
-const db = firebase.firestore();
-const st = firebase.storage();
+const db = firebase.firestore()
+const st = firebase.storage()
 
 export default function Shop() {
-  const [flag, setFlag] = useState(false);
-  const [flag02, setFlag02] = useState(false);
-  const [ch, setCh] = useState(false);
-  const [foods, setFoods] = useState([]);
-  const [dish, setDish] = useState([]);
-  const [count, setCount] = useState(0);
-  const [stock, setStock] = useState([]);
-  const [now, setNow] = useState("野菜");
-  const router = useRouter();
+  const [flag, setFlag] = useState(false)
+  const [flag02, setFlag02] = useState(false)
+  const [ch, setCh] = useState(false)
+  const [foods, setFoods] = useState([])
+  const [dish, setDish] = useState([])
+  const [count, setCount] = useState(0)
+  const [stock, setStock] = useState([])
+  const [now, setNow] = useState("野菜")
+  const router = useRouter()
   // input要素
-  const [name, setName] = useState("");
-  const [unit, setUnit] = useState("");
-  const [genre, setGenre] = useState("");
-  const [photo, setPhoto] = useState(null);
-  const [urls, setUrls] = useState(null);
+  const [name, setName] = useState("")
+  const [unit, setUnit] = useState("")
+  const [genre, setGenre] = useState("")
+  const [photo, setPhoto] = useState(null)
+  const [urls, setUrls] = useState(null)
 
   const data = [
     { genre: "野菜", emoji: "green_salad" },
     { genre: "肉類", emoji: "cut_of_meat" },
     { genre: "魚介類", emoji: "fish" },
     { genre: "デザート", emoji: "cake" },
-  ];
+  ]
 
   const genres = [
     { genre: "未選択" },
@@ -41,7 +41,7 @@ export default function Shop() {
     { genre: "肉類" },
     { genre: "魚介類" },
     { genre: "デザート" },
-  ];
+  ]
 
   const units = [
     { union: "未選択" },
@@ -49,7 +49,7 @@ export default function Shop() {
     { union: "匹" },
     { union: "g" },
     { union: "ml" },
-  ];
+  ]
 
   useEffect(async () => {
     await db
@@ -57,39 +57,39 @@ export default function Shop() {
       .where("genre", "==", now)
       .get()
       .then((snapshot) => {
-        let mydata = [];
+        let mydata = []
         snapshot.forEach((document) => {
-          const doc = document.data();
+          const doc = document.data()
           mydata.push({
             name: doc.food,
             genre: doc.genre,
             unit: doc.unit,
             url: doc.url,
-          });
-        });
-        setFoods(mydata);
-      });
-  }, [now, ch]);
+          })
+        })
+        setFoods(mydata)
+      })
+  }, [now, ch])
 
   useEffect(async () => {
     await db
       .collection("stocks")
       .get()
       .then((snapshot) => {
-        let mydata = [];
+        let mydata = []
         snapshot.forEach((document) => {
-          const doc = document.data();
+          const doc = document.data()
           mydata.push({
             name: doc.food_name,
             quantity: doc.food_quantity,
             genre: doc.food_genre,
             unit: doc.food_unit,
             id: document.id,
-          });
-        });
-        setStock(mydata);
-      });
-  }, []);
+          })
+        })
+        setStock(mydata)
+      })
+  }, [])
 
   const handleAdd = useCallback((e) => {
     setDish({
@@ -98,28 +98,28 @@ export default function Shop() {
       unit: e.unit,
       url: e.url,
       quantity: 0,
-    });
-    setCount(0);
-    return setFlag(true);
-  }, []);
+    })
+    setCount(0)
+    return setFlag(true)
+  }, [])
 
   const handlePlus = useCallback(() => {
-    setCount((prevCount) => prevCount + 1);
-  }, [count]);
+    setCount((prevCount) => prevCount + 1)
+  }, [count])
 
   const handleSub = useCallback(() => {
     if (count > 0) {
-      setCount((prevCount) => prevCount - 1);
+      setCount((prevCount) => prevCount - 1)
     }
-  }, [count]);
+  }, [count])
 
   const handleChange = useCallback(
     (e) => {
-      console.log(e);
-      setNow(() => e);
+      console.log(e)
+      setNow(() => e)
     },
     [now]
-  );
+  )
 
   const doAction = (e) => {
     if (count > 0) {
@@ -129,20 +129,20 @@ export default function Shop() {
         food_genre: dish.genre,
         food_unit: dish.unit,
         food_url: dish.url,
-      };
+      }
       stock.map((d, i) => {
         if (d.name === ob.food_name) {
-          ob.food_quantity += d.quantity;
-          db.collection("stocks").doc(d.id).delete();
+          ob.food_quantity += d.quantity
+          db.collection("stocks").doc(d.id).delete()
         }
-      });
+      })
       db.collection("stocks")
         .add(ob)
         .then((ref) => {
-          router.push("/ref");
-        });
+          router.push("/ref")
+        })
     }
-  };
+  }
 
   // input処理
   const handleRefAdd = async () => {
@@ -162,32 +162,32 @@ export default function Shop() {
                 genre: genre,
                 unit: unit,
                 url: url,
-              };
+              }
               db.collection("foods")
                 .add(ob)
                 .then((ref) => {
-                  setFlag02(!flag02);
-                  setCh(!ch);
-                });
-            });
-        });
+                  setFlag02(!flag02)
+                  setCh(!ch)
+                })
+            })
+        })
     } else {
-      alert("未入力部分があります");
-      return;
+      alert("未入力部分があります")
+      return
     }
-  };
+  }
 
   const handleSelect = useCallback((e) => {
-    setGenre(e.target.value);
-  });
+    setGenre(e.target.value)
+  })
 
   const changeName = useCallback((e) => {
-    setName(e.target.value.trim());
-  }, []);
+    setName(e.target.value.trim())
+  }, [])
 
   const handleSelect02 = useCallback((e) => {
-    setUnit(e.target.value);
-  }, []);
+    setUnit(e.target.value)
+  }, [])
 
   return (
     <div>
@@ -280,7 +280,6 @@ export default function Shop() {
                   {foods.map((d, i) => (
                     <div
                       key={i}
-                      onClick={() => handleAdd(d)}
                       className={clsx("xl:w-1/4 md:w-1/2", classes.card)}
                     >
                       <div className="bg-white p-6 rounded-lg">
@@ -297,7 +296,10 @@ export default function Shop() {
                           <p className="leading-relaxed text-base rounded-full bg-yellow-200 pt-3 px-4">
                             {d.unit}
                           </p>
-                          <p className="cursor-pointer hover:bg-yellow-200 pt-2 pl-2 pr-1 rounded-full">
+                          <p
+                            onClick={() => handleAdd(d)}
+                            className="cursor-pointer hover:bg-yellow-200 pt-2 pl-2 pr-1 rounded-full"
+                          >
                             <TheEmoji emoji="shopping_trolley" size={35} />
                           </p>
                         </div>
@@ -350,7 +352,7 @@ export default function Shop() {
                 <div className="container mb-3">
                   <button
                     onClick={() => setFlag(!flag)}
-                    className=" mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                    className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
                   >
                     閉じる
                   </button>
@@ -377,38 +379,68 @@ export default function Shop() {
               )}
             >
               <div className="p-6">
-                <label htmlFor="photo">画像</label>
-                <input
-                  type="file"
-                  name="avatar"
-                  id="avatar"
-                  onChange={(e) => setPhoto(e.target.files[0])}
-                />
-                <br />
-                <label htmlFor="name">食材名</label>
-                <input
-                  name="name"
-                  type="text"
-                  value={name}
-                  onChange={changeName}
-                />
-                <br />
-                <label htmlFor="unit">単位</label>
-                <select name="unit" value={unit} onChange={handleSelect02}>
-                  {units.map((d, i) => (
-                    <option key={d.union}>{d.union}</option>
-                  ))}
-                </select>
-                <br />
-                <label htmlFor="genre">分類</label>
-                <select name="genre" value={genre} onChange={handleSelect}>
-                  {genres.map((d, i) => (
-                    <option key={d.genre}>{d.genre}</option>
-                  ))}
-                </select>
-                <br />
-                <button onClick={() => setFlag02(!flag02)}>閉じる</button>
-                <button onClick={() => handleRefAdd()}>追加</button>
+                <div className="mb-4">
+                  <label htmlFor="photo">画像</label>
+                  <input
+                    type="file"
+                    name="avatar"
+                    id="avatar"
+                    onChange={(e) => setPhoto(e.target.files[0])}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="name">食材名</label>
+                  <input
+                    name="name"
+                    autocomplete="off"
+                    type="text"
+                    value={name}
+                    onChange={changeName}
+                    className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="unit" className="mr-2">
+                    単位(g/ml/個...)
+                  </label>
+                  <select
+                    name="unit"
+                    value={unit}
+                    onChange={handleSelect02}
+                    className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
+                  >
+                    {units.map((d, i) => (
+                      <option key={d.union}>{d.union}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="genre" className="mr-2">
+                    分類(野菜...)
+                  </label>
+                  <select
+                    name="genre"
+                    value={genre}
+                    onChange={handleSelect}
+                    className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
+                  >
+                    {genres.map((d, i) => (
+                      <option key={d.genre}>{d.genre}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={() => setFlag02(!flag02)}
+                  className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                >
+                  閉じる
+                </button>
+                <button
+                  onClick={() => handleRefAdd()}
+                  className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                >
+                  カード追加
+                </button>
               </div>
             </div>
             <div
@@ -421,5 +453,5 @@ export default function Shop() {
         )}
       </div>
     </div>
-  );
+  )
 }
