@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react"
-import Head from "next/head"
 import classes from "src/styles/Ref.module.css"
 import { useRouter } from "next/router"
 import { TheEmoji } from "src/components/TheEmoji"
 import firebase from "firebase"
 import "src/components/fire"
-import Link from "next/link"
 import clsx from "clsx"
+import Layout from "src/components/Layout"
 
 const db = firebase.firestore()
 const st = firebase.storage()
@@ -26,14 +25,6 @@ export default function Shop() {
   const [unit, setUnit] = useState("")
   const [genre, setGenre] = useState("")
   const [photo, setPhoto] = useState(null)
-  const [urls, setUrls] = useState(null)
-
-  const data = [
-    { genre: "野菜", emoji: "green_salad" },
-    { genre: "肉類", emoji: "cut_of_meat" },
-    { genre: "魚介類", emoji: "fish" },
-    { genre: "デザート", emoji: "cake" },
-  ]
 
   const genres = [
     { genre: "未選択" },
@@ -113,14 +104,6 @@ export default function Shop() {
     }
   }, [count])
 
-  const handleChange = useCallback(
-    (e) => {
-      console.log(e)
-      setNow(() => e)
-    },
-    [now]
-  )
-
   const doAction = (e) => {
     if (count > 0) {
       const ob = {
@@ -190,268 +173,192 @@ export default function Shop() {
   }, [])
 
   return (
-    <div>
-      <Head>
-        <title>Refrigerator Page</title>
-      </Head>
-      <div className="flex flex-col min-h-screen font-mono">
-        <header className="text-gray-600 body-font bg-yellow-200 border-b border-gray-400">
-          <div className="container mx-auto flex py-3 px-6 sm:flex-row">
-            <a className="flex title-font font-medium items-center text-gray-900 mb-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                className="w-10 h-10 text-white p-2 bg-yellow-500 rounded-full cursor-pointer"
-                viewBox="0 0 24 24"
+    <Layout setNow={setNow} now={now} title="買い物" bgcolor="yellow">
+      <section className="text-gray-600 body-font">
+        <div className="container p-6 mx-auto">
+          <div className="flex flex-wrap gap-3">
+            <div
+              onClick={() => setFlag02(!flag02)}
+              className={clsx("xl:w-1/4 md:w-1/2 cursor-pointer", classes.card)}
+            >
+              <p
+                className={clsx(
+                  "bg-gray-300 hover:bg-gray-200 rounded-lg",
+                  classes.add
+                )}
               >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
-              <span className="ml-3 text-2xl cursor-pointer">買い物</span>
-            </a>
-            <div className="md:border-l md:border-gray-400 flex items-center ml-3 pl-3">
-              <Link href={"/ref"}>
-                <a class="mr-5 hover:text-gray-900 hidden sm:block">冷蔵庫</a>
-              </Link>
-              <Link href={"/shop"}>
-                <a class="mr-5 hover:text-gray-900 hidden sm:block">買い物</a>
-              </Link>
+                食材カード
+              </p>
             </div>
-          </div>
-        </header>
-        <div className="flex flex-col sm:flex-row flex-1">
-          <nav className="text-gray-600 p-5 sm:px-5 body-font bg-yellow-200 w-full order-last fixed bottom-0 border-gray-400 sm:border-t-2 sm:border-blue-200 sm:hidden sm:absolute sm:-left-10">
-            <div className="flex flex-row sm:flex-col justify-between">
-              <Link href={"/ref"}>
-                <span className="mx-auto cursor-pointer">冷蔵庫</span>
-              </Link>
-              <Link href={"/shop"}>
-                <span className="mx-auto cursor-pointer">買い物</span>
-              </Link>
-              <Link href={"/ref"}>
-                <span className="mx-auto cursor-pointer">なうレピ</span>
-              </Link>
-              <Link href={"/ref"}>
-                <span className="mx-auto cursor-pointer">レシピ</span>
-              </Link>
-            </div>
-          </nav>
-          <main className="text-gray-600 body-font bg-yellow-50 flex-1 sm:border-l sm:border-gray-400">
-            <aside className="text-gray-600 body-font">
-              <div className="container py-4 px-6 mx-auto min-w-full bg-yellow-200 border-b border-gray-400">
-                <ul>
-                  {data.map((d) => (
-                    <list
-                      className="bg-yellow-50 mr-2 py-2 px-3 rounded-full cursor-pointer hover:bg-yellow-500 hover:text-white"
-                      onClick={() => handleChange(d.genre)}
-                      key={d.genre}
-                    >
-                      <span className="mr-1 -pb-4 -pt-4">
-                        <TheEmoji emoji={d.emoji} size={15} />
-                      </span>
-                      {d.genre}
-                    </list>
-                  ))}
-                </ul>
-              </div>
-            </aside>
-            <section className="text-gray-600 body-font">
-              <div className="container p-6 mx-auto">
-                <div className="flex flex-wrap gap-3">
-                  <div
-                    onClick={() => setFlag02(!flag02)}
-                    className={clsx(
-                      "xl:w-1/4 md:w-1/2 cursor-pointer",
-                      classes.card
-                    )}
-                  >
+            {foods.map((d, i) => (
+              <div key={i} className={clsx("xl:w-1/4 md:w-1/2", classes.card)}>
+                <div className="bg-white p-6 rounded-lg">
+                  <img
+                    style={{ height: "70px", display: "block" }}
+                    src={d.url}
+                    alt="null"
+                    className="h-20 rounded w-full object-cover object-center mb-6"
+                  />
+                  <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
+                    {d.name}
+                  </h2>
+                  <div className="flex justify-between">
+                    <p className="leading-relaxed text-base rounded-full bg-yellow-200 pt-3 px-4">
+                      {d.unit}
+                    </p>
                     <p
-                      className={clsx(
-                        "bg-gray-300 hover:bg-gray-200 rounded-lg",
-                        classes.add
-                      )}
+                      onClick={() => handleAdd(d)}
+                      className="cursor-pointer hover:bg-yellow-200 pt-2 pl-2 pr-1 rounded-full"
                     >
-                      食材カード
+                      <TheEmoji emoji="shopping_trolley" size={35} />
                     </p>
                   </div>
-                  {foods.map((d, i) => (
-                    <div
-                      key={i}
-                      className={clsx("xl:w-1/4 md:w-1/2", classes.card)}
-                    >
-                      <div className="bg-white p-6 rounded-lg">
-                        <img
-                          style={{ height: "70px", display: "block" }}
-                          src={d.url}
-                          alt="null"
-                          className="h-20 rounded w-full object-cover object-center mb-6"
-                        />
-                        <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                          {d.name}
-                        </h2>
-                        <div className="flex justify-between">
-                          <p className="leading-relaxed text-base rounded-full bg-yellow-200 pt-3 px-4">
-                            {d.unit}
-                          </p>
-                          <p
-                            onClick={() => handleAdd(d)}
-                            className="cursor-pointer hover:bg-yellow-200 pt-2 pl-2 pr-1 rounded-full"
-                          >
-                            <TheEmoji emoji="shopping_trolley" size={35} />
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
-            </section>
-          </main>
+            ))}
+          </div>
         </div>
-        {flag ? (
-          <>
-            <div
-              className={clsx(
-                "text-gray-600 body-font container w-24",
-                classes.modal
-              )}
-            >
-              <div className="p-6">
-                <img
-                  style={{ height: "70px", display: "block" }}
-                  src={dish.url}
-                  alt="null"
-                  className="h-20 rounded w-full object-cover object-center mb-6"
-                />
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                  {dish.name}
-                </h2>
-                <div className="container mb-5">
-                  <span className="text-2xl bg-yellow-200 py-2 px-3 rounded-full">
-                    {count}
-                  </span>
-                  <span className="text-2xl p-2">{dish.unit}</span>
-                </div>
-                <div className="container mb-3">
-                  <button
-                    onClick={handlePlus}
-                    className=" mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
-                  >
-                    +1
-                  </button>
-                  <button
-                    onClick={handleSub}
-                    className=" mx-auto text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
-                  >
-                    -1
-                  </button>
-                </div>
-                <div className="container mb-3">
-                  <button
-                    onClick={() => setFlag(!flag)}
-                    className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
-                  >
-                    閉じる
-                  </button>
-                  <button
-                    onClick={doAction}
-                    className=" mx-auto text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
-                  >
-                    冷蔵庫に追加
-                  </button>
-                </div>
+      </section>
+      {flag ? (
+        <>
+          <div
+            className={clsx(
+              "text-gray-600 body-font container w-24",
+              classes.modal
+            )}
+          >
+            <div className="p-6">
+              <img
+                style={{ height: "70px", display: "block" }}
+                src={dish.url}
+                alt="null"
+                className="h-20 rounded w-full object-cover object-center mb-6"
+              />
+              <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
+                {dish.name}
+              </h2>
+              <div className="container mb-5">
+                <span className="text-2xl bg-yellow-200 py-2 px-3 rounded-full">
+                  {count}
+                </span>
+                <span className="text-2xl p-2">{dish.unit}</span>
               </div>
-            </div>
-            <div className={classes.back} onClick={() => setFlag(!flag)}></div>
-          </>
-        ) : (
-          ""
-        )}
-        {flag02 ? (
-          <>
-            <div
-              className={clsx(
-                "text-gray-600 body-font container w-24",
-                classes.modal
-              )}
-            >
-              <div className="p-6">
-                <div className="mb-4">
-                  <label htmlFor="photo">画像</label>
-                  <input
-                    type="file"
-                    name="avatar"
-                    id="avatar"
-                    onChange={(e) => setPhoto(e.target.files[0])}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="name">食材名</label>
-                  <input
-                    name="name"
-                    autocomplete="off"
-                    type="text"
-                    value={name}
-                    onChange={changeName}
-                    className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="unit" className="mr-2">
-                    単位(g/ml/個...)
-                  </label>
-                  <select
-                    name="unit"
-                    value={unit}
-                    onChange={handleSelect02}
-                    className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
-                  >
-                    {units.map((d, i) => (
-                      <option key={d.union}>{d.union}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="genre" className="mr-2">
-                    分類(野菜...)
-                  </label>
-                  <select
-                    name="genre"
-                    value={genre}
-                    onChange={handleSelect}
-                    className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
-                  >
-                    {genres.map((d, i) => (
-                      <option key={d.genre}>{d.genre}</option>
-                    ))}
-                  </select>
-                </div>
+              <div className="container mb-3">
                 <button
-                  onClick={() => setFlag02(!flag02)}
+                  onClick={handlePlus}
+                  className=" mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                >
+                  +1
+                </button>
+                <button
+                  onClick={handleSub}
+                  className=" mx-auto text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                >
+                  -1
+                </button>
+              </div>
+              <div className="container mb-3">
+                <button
+                  onClick={() => setFlag(!flag)}
                   className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
                 >
                   閉じる
                 </button>
                 <button
-                  onClick={() => handleRefAdd()}
-                  className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                  onClick={doAction}
+                  className=" mx-auto text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
                 >
-                  カード追加
+                  冷蔵庫に追加
                 </button>
               </div>
             </div>
-            <div
-              className={classes.back}
-              onClick={() => setFlag02(!flag02)}
-            ></div>
-          </>
-        ) : (
-          ""
-        )}
-      </div>
-    </div>
+          </div>
+          <div className={classes.back} onClick={() => setFlag(!flag)}></div>
+        </>
+      ) : (
+        ""
+      )}
+      {flag02 ? (
+        <>
+          <div
+            className={clsx(
+              "text-gray-600 body-font container w-24",
+              classes.modal
+            )}
+          >
+            <div className="p-6">
+              <div className="mb-4">
+                <label htmlFor="photo">画像</label>
+                <input
+                  type="file"
+                  name="avatar"
+                  id="avatar"
+                  onChange={(e) => setPhoto(e.target.files[0])}
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="name">食材名</label>
+                <input
+                  name="name"
+                  autocomplete="off"
+                  type="text"
+                  value={name}
+                  onChange={changeName}
+                  className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="unit" className="mr-2">
+                  単位(g/ml/個...)
+                </label>
+                <select
+                  name="unit"
+                  value={unit}
+                  onChange={handleSelect02}
+                  className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
+                >
+                  {units.map((d, i) => (
+                    <option key={d.union}>{d.union}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label htmlFor="genre" className="mr-2">
+                  分類(野菜...)
+                </label>
+                <select
+                  name="genre"
+                  value={genre}
+                  onChange={handleSelect}
+                  className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
+                >
+                  {genres.map((d, i) => (
+                    <option key={d.genre}>{d.genre}</option>
+                  ))}
+                </select>
+              </div>
+              <button
+                onClick={() => setFlag02(!flag02)}
+                className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+              >
+                閉じる
+              </button>
+              <button
+                onClick={() => handleRefAdd()}
+                className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+              >
+                カード追加
+              </button>
+            </div>
+          </div>
+          <div
+            className={classes.back}
+            onClick={() => setFlag02(!flag02)}
+          ></div>
+        </>
+      ) : (
+        ""
+      )}
+    </Layout>
   )
 }
