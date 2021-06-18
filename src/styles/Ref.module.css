@@ -29,7 +29,7 @@
   left: 0;
   margin: auto;
   /* background: rgba(256, 256, 256, 0.8); */
-  background-color: rgba(239, 246, 255, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   -ms-filter: blur(6px);
   filter: blur(6px);
 }

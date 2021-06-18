@@ -20,6 +20,7 @@ export default function Shop() {
   const [stock, setStock] = useState([])
   const [now, setNow] = useState("野菜")
   const router = useRouter()
+  const setHook = useState("")
   // input要素
   const [name, setName] = useState("")
   const [unit, setUnit] = useState("")
@@ -160,17 +161,9 @@ export default function Shop() {
     }
   }
 
-  const handleSelect = useCallback((e) => {
-    setGenre(e.target.value)
+  const handleAll = useCallback((e, setHook) => {
+    setHook(e.target.value)
   })
-
-  const changeName = useCallback((e) => {
-    setName(e.target.value.trim())
-  }, [])
-
-  const handleSelect02 = useCallback((e) => {
-    setUnit(e.target.value)
-  }, [])
 
   return (
     <Layout setNow={setNow} now={now} title="買い物" bgcolor="yellow">
@@ -259,7 +252,7 @@ export default function Shop() {
               </div>
               <div className="container mb-3">
                 <button
-                  onClick={() => setFlag(!flag)}
+                  onClick={(e) => setFlag(!flag)}
                   className="mx-auto mr-2 text-gray-600 bg-yellow-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
                 >
                   閉じる
@@ -303,7 +296,8 @@ export default function Shop() {
                   autocomplete="off"
                   type="text"
                   value={name}
-                  onChange={changeName}
+                  // onChange={changeName}
+                  onChange={(e) => handleAll(e, setName)}
                   className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
               </div>
@@ -314,7 +308,8 @@ export default function Shop() {
                 <select
                   name="unit"
                   value={unit}
-                  onChange={handleSelect02}
+                  // onChange={handleSelect02}
+                  onChange={(e) => handleAll(e, setUnit)}
                   className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
                 >
                   {units.map((d, i) => (
@@ -329,7 +324,8 @@ export default function Shop() {
                 <select
                   name="genre"
                   value={genre}
-                  onChange={handleSelect}
+                  // onChange={handleSelect}
+                  onChange={(e) => handleAll(e, setGenre)}
                   className="rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-1 leading-8 transition-colors duration-200 ease-in-out"
                 >
                   {genres.map((d, i) => (

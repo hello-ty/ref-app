@@ -11,10 +11,14 @@ export default function Layout(props) {
     { genre: "デザート", emoji: "cake" },
   ]
 
+  const [status, setStatus] = useState("野菜")
+
   const handleChange = useCallback(
     (e) => {
       console.log(e)
       props.setNow(() => e)
+      setStatus(() => e)
+      console.log(e)
     },
     [props.now]
   )
@@ -28,30 +32,35 @@ export default function Layout(props) {
         <header
           className={`text-gray-600 body-font bg-${props.bgcolor}-200 border-b border-gray-400`}
         >
-          <div className="container mx-auto flex py-3 px-6 sm:flex-row">
-            <a className="flex title-font font-medium items-center text-gray-900 mb-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                className={`w-10 h-10 text-white p-2 bg-${props.bgcolor}-500 rounded-full cursor-pointer`}
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
-              <span className="ml-3 text-2xl cursor-pointer">
-                {props.title}
-              </span>
-            </a>
+          <div className="container mx-auto flex py-3 px-1 sm:px-6 sm:flex-row">
+            <Link href={"#"}>
+              <a className="flex title-font font-medium items-center text-gray-900 mb-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  className={`w-10 h-10 text-white p-2 bg-${props.bgcolor}-500 rounded-full cursor-pointer`}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span className="ml-3 text-2xl cursor-pointer">
+                  {props.title}
+                </span>
+              </a>
+            </Link>
             <div className="md:border-l md:border-gray-400 flex items-center ml-3 pl-3">
               <Link href={"/ref"}>
                 <a class="mr-5 hover:text-gray-900 hidden sm:block">冷蔵庫</a>
               </Link>
               <Link href={"/shop"}>
                 <a class="mr-5 hover:text-gray-900 hidden sm:block">買い物</a>
+              </Link>
+              <Link href={"/recipe"}>
+                <a class="mr-5 hover:text-gray-900 hidden sm:block">レシピ</a>
               </Link>
             </div>
           </div>
@@ -78,14 +87,20 @@ export default function Layout(props) {
           <main
             className={`text-gray-600 body-font bg-${props.bgcolor}-50 flex-1 sm:border-l sm:border-gray-400`}
           >
-            <aside className="text-gray-600 body-font">
+            <aside className="text-gray-600 text-sm sm:text-base">
               <div
-                className={`container py-4 px-6 mx-auto min-w-full bg-${props.bgcolor}-200 border-b border-gray-400`}
+                className={`container py-4 px-1 sm:py-4 sm:px-6 mx-auto min-w-full bg-${props.bgcolor}-200 border-b border-gray-400`}
               >
                 <ul>
                   {data.map((d) => (
                     <list
-                      className={`bg-${props.bgcolor}-50 mr-2 py-2 px-3 rounded-full cursor-pointer hover:bg-${props.bgcolor}-500 hover:text-white`}
+                      className={`${
+                        d.genre === status
+                          ? `bg-${props.bgcolor}-500 text-white`
+                          : `bg-${props.bgcolor}-50`
+                      } mr-2 py-2 px-1 sm:px-3 rounded-full cursor-pointer hover:bg-${
+                        props.bgcolor
+                      }-500 hover:text-white`}
                       onClick={() => handleChange(d.genre)}
                       key={d.genre}
                     >

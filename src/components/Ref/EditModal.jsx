@@ -80,7 +80,7 @@ export default function EditModal(props) {
               <div className="container mb-3">
                 <button
                   onClick={handlePlus}
-                  className=" mx-auto mr-2 text-gray-600 bg-blue-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
+                  className="mx-auto mr-2 text-gray-600 bg-blue-200 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 hover:text-white rounded text-lg"
                 >
                   +1
                 </button>
